@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="후쿠오카 3박4일 여행 일정 — 동선 지도와 시간표">
+<title>후쿠오카 3박4일</title>
+<style>
+  :root{
+    --paper:#F4F0E7; --surface:#FFFFFF; --surface-2:#FBF7EF;
+    --ink:#22303B; --muted:#5F6E7A; --line:#E7DECE;
+    --accent:#D75E38; --sea:#3C8FA3;
+    --d1:#D75E38; --d2:#1F8AA6; --d3:#7A5CC0; --d4:#4E8B57;
+    --shadow:0 1px 2px rgba(30,40,50,.06),0 8px 24px rgba(30,40,50,.06);
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12181D; --surface:#1A222A; --surface-2:#202A32;
+      --ink:#EAF0F4; --muted:#A2B2BE; --line:#2E3A44;
+      --accent:#EE7A51; --sea:#4FA6BD;
+      --d1:#F07B52; --d2:#41B4CF; --d3:#A488E6; --d4:#6FB77C;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12181D; --surface:#1A222A; --surface-2:#202A32;
+    --ink:#EAF0F4; --muted:#A2B2BE; --line:#2E3A44;
+    --accent:#EE7A51; --sea:#4FA6BD;
+    --d1:#F07B52; --d2:#41B4CF; --d3:#A488E6; --d4:#6FB77C;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding-inline:16px}
+
+  /* Header + day nav */
+  .topbar{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:saturate(1.2) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{display:flex; align-items:center; gap:10px; padding-block:9px; flex-wrap:wrap}
+  .brand{font-family:"Noto Serif KR",serif; font-weight:700; font-size:15px; letter-spacing:.01em; white-space:nowrap}
+  .brand .en{color:var(--muted); font-family:"Noto Sans KR",sans-serif; font-weight:500; font-size:11px; letter-spacing:.14em; text-transform:uppercase; margin-left:6px}
+  .nav{display:flex; gap:6px; margin-left:auto; flex-wrap:wrap}
+  .nav a{
+    text-decoration:none; color:var(--muted); font-size:12.5px; font-weight:600;
+    padding:5px 10px; border-radius:999px; border:1px solid var(--line); background:var(--surface);
+    white-space:nowrap;
+  }
+  .nav a:hover{color:var(--ink); border-color:var(--muted)}
+
+  /* Hero */
+  .hero{padding-block:26px 8px}
+  .kicker{font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--accent)}
+  .hero h1{
+    font-family:"Noto Serif KR",serif; font-weight:800; text-wrap:balance;
+    font-size:clamp(30px,8vw,46px); line-height:1.12; margin:.28em 0 .1em;
+  }
+  .hero .sub{color:var(--muted); font-size:14.5px; margin:0}
+  .facts{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:18px;
+  }
+  .fact{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:12px 14px; box-shadow:var(--shadow);
+  }
+  .fact .t{font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+  .fact .v{font-size:14px; margin-top:3px; font-variant-numeric:tabular-nums}
+  .fact .v b{font-weight:700}
+  .fact .v small{color:var(--muted); font-size:12.5px}
+
+  section{scroll-margin-top:104px}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin:34px 0 12px; flex-wrap:wrap}
+  .sec-head h2{font-family:"Noto Serif KR",serif; font-weight:700; font-size:22px; margin:0}
+  .sec-head .meta{color:var(--muted); font-size:13px}
+
+  /* Map card */
+  .mapcard{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .mapcard .maphead{
+    display:flex; align-items:center; gap:10px; padding:12px 15px; border-bottom:1px solid var(--line);
+  }
+  .daychip{
+    width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
+    color:#fff; font-weight:800; font-size:13px; flex:none;
+  }
+  .maphead .h{font-family:"Noto Serif KR",serif; font-weight:700; font-size:16px}
+  .maphead .d{color:var(--muted); font-size:12.5px; margin-left:auto; font-variant-numeric:tabular-nums; white-space:nowrap}
+  .mapbox{padding:6px 6px 2px}
+  .mapbox svg{display:block; width:100%; height:auto}
+
+  .legend{display:flex; flex-wrap:wrap; gap:8px 14px; padding:10px 15px 14px}
+  .legend span{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:var(--muted)}
+  .legend i{width:11px; height:11px; border-radius:3px; display:inline-block}
+  .legend .star{color:var(--accent); font-size:14px; line-height:1}
+
+  /* Timeline */
+  .timeline{margin:14px 0 0; padding:0; list-style:none}
+  .timeline li{
+    display:grid; grid-template-columns:58px 1fr; gap:12px; padding:11px 0;
+    border-top:1px solid var(--line);
+  }
+  .timeline li:first-child{border-top:0}
+  .time{font-size:12.5px; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums; padding-top:2px}
+  .ev{display:flex; gap:9px}
+  .num{
+    flex:none; width:21px; height:21px; border-radius:50%; color:#fff; font-weight:700;
+    font-size:12px; display:grid; place-items:center; margin-top:1px;
+  }
+  .num.blank{background:transparent; color:var(--muted); border:1px dashed var(--line)}
+  .ev .body .h{font-weight:600; font-size:14.5px}
+  .ev .body .p{color:var(--muted); font-size:13px; margin-top:1px}
+  .ev .body .p b{color:var(--ink); font-weight:600}
+
+  .callout{
+    background:var(--surface-2); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:12px; padding:11px 14px; margin-top:14px; font-size:13px; color:var(--muted);
+  }
+  .callout b{color:var(--ink)}
+
+  /* Tips */
+  .tips{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+  .tip{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 15px; box-shadow:var(--shadow)}
+  .tip .t{font-weight:700; font-size:13.5px; margin-bottom:4px; display:flex; align-items:center; gap:7px}
+  .tip .t i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .tip p{margin:0; color:var(--muted); font-size:13px}
+  .tip p b{color:var(--ink); font-weight:600}
+
+  footer{color:var(--muted); font-size:12px; text-align:center; padding:30px 0 20px; line-height:1.7}
+  footer a{color:var(--muted)}
+
+  @media (max-width:520px){
+    .facts{grid-template-columns:1fr}
+    .tips{grid-template-columns:1fr}
+    .timeline li{grid-template-columns:52px 1fr; gap:10px}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth}
+  }
+  /* SVG map classes */
+  .m-bg{fill:var(--surface-2)}
+  .m-bay{fill:var(--sea); opacity:.13}
+  .m-pond{fill:var(--sea); opacity:.28}
+  .m-river{fill:none; stroke:var(--sea); opacity:.28; stroke-width:6; stroke-linecap:round}
+  .m-dot{fill:var(--muted); opacity:.38}
+  .m-route{fill:none; stroke-width:4.5; stroke-linejoin:round; stroke-linecap:round; opacity:.9}
+  .m-label{fill:var(--ink); font-weight:600; font-size:21px; paint-order:stroke; stroke:var(--surface-2); stroke-width:5px; stroke-linejoin:round}
+  .m-label.mut{fill:var(--muted); font-size:19px}
+  .m-num{fill:#fff; font-weight:800; font-size:16px}
+  .m-star{fill:var(--accent); font-size:27px; paint-order:stroke; stroke:var(--surface-2); stroke-width:4px}
+  /* Real-map (Google Maps screenshot) overlay */
+  .rmap{position:relative; width:100%; border-radius:12px; overflow:hidden; background:var(--surface-2); line-height:0}
+  .rmap img{display:block; width:100%; height:auto}
+  .rroute{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1}
+  .rroute polyline{fill:none; stroke:var(--r); stroke-width:2.6; stroke-dasharray:5 4.5; opacity:.92; vector-effect:non-scaling-stroke; stroke-linejoin:round; stroke-linecap:round}
+  .pin{position:absolute; transform:translate(-50%,-50%); width:25px; height:25px; border-radius:50%;
+    background:var(--r); color:#fff; font-weight:800; font-size:13px; line-height:1; display:grid; place-items:center;
+    box-shadow:0 1px 4px rgba(0,0,0,.4); border:2px solid #fff; z-index:2}
+  .pin.home{background:transparent; border:0; box-shadow:none; color:var(--accent); font-size:30px; width:auto; height:auto}
+  .pin.home::before{content:"★"; text-shadow:0 0 3px #fff,0 0 4px #fff,0 1px 2px rgba(0,0,0,.35)}
+  .edge{position:absolute; transform:translateY(-50%); z-index:3; display:inline-flex; align-items:center; gap:5px;
+    background:var(--surface); border:1px solid var(--line); color:var(--ink); font-size:11px; font-weight:700;
+    padding:3px 8px 3px 4px; border-radius:999px; box-shadow:var(--shadow); white-space:nowrap}
+  .edge .en{width:16px; height:16px; border-radius:50%; background:var(--r); color:#fff; font-size:10px; font-weight:800; display:grid; place-items:center; flex:none}
+  .edge.left{left:5px} .edge.right{right:5px}
+  .rmap-note{padding:9px 14px 2px; color:var(--muted); font-size:12px}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;800&display=swap">
+<style>
+  .crumb{max-width:760px;margin:0 auto;padding:12px 16px 2px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .crumb a{color:var(--muted);text-decoration:none}
+  .crumb a:hover{color:var(--ink)}
+  .crumb .sep{opacity:.45}
+  .crumb .cur{color:var(--ink);font-weight:600}
+</style>
+<style>img{max-width:100%;height:auto}</style>
+</head>
+<body>
+
+<div class="crumb">
+  <a href="../../">Joonsung Park</a><span class="sep">›</span>
+  <a href="../">Personal</a><span class="sep">›</span>
+  <span class="cur">후쿠오카 3박4일</span>
+</div>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">후쿠오카 <span class="en">Fukuoka · 3N4D</span></div>
+    <nav class="nav">
+      <a href="#overview">전체</a>
+      <a href="#day1">1일</a>
+      <a href="#day2">2일</a>
+      <a href="#day3">3일</a>
+      <a href="#day4">4일</a>
+      <a href="#tips">팁</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">9월 24 – 27 · 오호리공원</div>
+    <h1>후쿠오카 3박4일</h1>
+    <p class="sub">숙소(도진마치)를 축으로, 하루를 한 지역으로 묶은 여유로운 동선</p>
+    <div class="facts">
+      <div class="fact"><div class="t">가는 편 · 9/24</div><div class="v"><b>서울 11:05</b> → <b>후쿠오카 12:30</b></div></div>
+      <div class="fact"><div class="t">오는 편 · 9/27</div><div class="v"><b>후쿠오카 12:10</b> → <b>서울 13:40</b></div></div>
+      <div class="fact"><div class="t">숙소</div><div class="v">BUENA VISTA OHORI PARK<br><small>주오구 아라토 · 도진마치 도보 4~5분 · 체크인 17:00</small></div></div>
+      <div class="fact"><div class="t">일행</div><div class="v">첫날 <b>19:00</b> 합류<br><small>공항 마중 X · 야타이 야식 함께</small></div></div>
+    </div>
+  </section>
+
+  <section id="overview">
+    <div class="sec-head"><h2>전체 지도</h2><span class="meta">지역·기준역 한눈에</span></div>
+    <div class="mapcard">
+      <div class="mapbox" id="map-overview"></div>
+      <div class="legend">
+        <span class="star">★</span><span>숙소(도진마치)</span>
+        <span><i style="background:var(--d1)"></i>1일 중심부</span>
+        <span><i style="background:var(--d2)"></i>2일 서쪽</span>
+        <span><i style="background:var(--d3)"></i>3일 동쪽</span>
+      </div>
+    </div>
+    <div class="callout">서쪽 <b>모모치·니시진</b>은 숙소 코앞, 중심부 <b>텐진·다이묘</b>는 지하철 3~5정거장, 동쪽 <b>나카스·하카타</b>는 그다음이에요. 이 순서대로 1→2→3일차를 배치했습니다.</div>
+  </section>
+
+  <section id="day1">
+    <div class="sec-head"><h2>1일차</h2><span class="meta">9/24 (목) · 도착 &amp; 다이묘 &amp; 숙소 근처 저녁</span></div>
+    <div class="mapcard">
+      <div class="maphead"><span class="daychip" style="background:var(--d1)">1</span><span class="h">중심부 (아카사카·다이묘·텐진)</span><span class="d">도착 12:30</span></div>
+      <div class="rmap" style="--r:var(--d1)">
+        <img src="img/cs.jpg" alt="1일차 중심부 지도">
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="36,20 45,24 52,22"/></svg>
+        <span class="pin" style="left:36%;top:20%">2</span>
+        <span class="pin" style="left:45%;top:24%">3</span>
+        <span class="pin" style="left:52%;top:22%">4</span>
+        <span class="edge left" style="top:15%"><span class="en">5</span>숙소 체크인</span>
+        <span class="edge left" style="top:24%"><span class="en">6</span>숙소 근처 식당</span>
+        <span class="edge right" style="top:11%"><span class="en">1</span>공항 (동쪽)</span>
+      </div>
+      <div class="rmap-note">② 아카사카 · ③ 다이묘(스텝스포츠) · ④ 텐진(키르훼봉) &nbsp;|&nbsp; ① 공항·⑤ 숙소·⑥ 숙소 근처 식당은 프레임 밖(서쪽)</div>
+    </div>
+    <ul class="timeline" data-day="1">
+      <li><span class="time">12:30</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">후쿠오카공항 도착</div><div class="p">입국·수하물 → 국제선에서 무료 셔틀로 국내선(지하철)로 이동</div></div></div></li>
+      <li><span class="time">13:30~</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">텐진/아카사카 · 짐 보관 &amp; 늦은 점심</div><div class="p">공항선으로 이동 → <b>대형 코인로커에 캐리어 보관</b> (숙소는 아파트형이라 보관 불가)</div></div></div></li>
+      <li><span class="time">14:30~</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">스텝스포츠(다이묘) · 다이묘 거리</div><div class="p">러닝 전문점 <b>스텝스포츠 福岡店</b>에서 러닝 용품 → 다이묘 둘러보기</div></div></div></li>
+      <li><span class="time">16:00</span><div class="ev"><span class="num" data-n="4"></span><div class="body"><div class="h">키르훼봉 타르트 포장</div><div class="p">텐진 매장(~20시 마감). 이 동네에 있는 김에 사서 들고 숙소로</div></div></div></li>
+      <li><span class="time">17:00</span><div class="ev"><span class="num" data-n="5"></span><div class="body"><div class="h">체크인 · 아마존 수령</div><div class="p">도진마치 → 도보 4~5분 체크인 · <b>숙소 아래 패밀리마트에서 아마존 물품 수령</b> · 타르트 냉장</div></div></div></li>
+      <li><span class="time">19:00~</span><div class="ev"><span class="num" data-n="6"></span><div class="body"><div class="h">숙소 근처 현지인 식당</div><div class="p">일행 합류 → 짐은 숙소에 두고 숙소 근처 현지인 식당에서 식사</div></div></div></li>
+    </ul>
+  </section>
+
+  <section id="day2">
+    <div class="sec-head"><h2>2일차</h2><span class="meta">9/25 (금) · 로폰마쓰·니시진 &amp; 모모치 노을 &amp; 숙소 야식</span></div>
+    <div class="mapcard">
+      <div class="maphead"><span class="daychip" style="background:var(--d2)">2</span><span class="h">숙소 주변 (서·남쪽)</span><span class="d">노을 18:15경</span></div>
+      <div class="rmap" style="--r:var(--d2)">
+        <img src="img/west.jpg" alt="2일차 서쪽 지도">
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="62,30 71,50 73,84 32,77 17,21 61,38 62,30"/></svg>
+        <span class="pin home" style="left:62%;top:30%"></span>
+        <span class="pin" style="left:71%;top:50%">1</span>
+        <span class="pin" style="left:73%;top:84%">2</span>
+        <span class="pin" style="left:32%;top:77%">3</span>
+        <span class="pin" style="left:17%;top:21%">4</span>
+        <span class="pin" style="left:61%;top:38%">5</span>
+      </div>
+      <div class="rmap-note">★ 숙소 · ① 오호리공원 · ② 로폰마쓰 · ③ 니시진(둘러보기·이른 저녁) · ④ 후쿠오카타워·모모치(노을) · ⑤ 마트 장보기·숙소 야식</div>
+    </div>
+    <ul class="timeline" data-day="2">
+      <li><span class="time">오전</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">오호리공원 산책</div><div class="p">숙소 앞 · 일본정원(옵션)까지</div></div></div></li>
+      <li><span class="time">낮</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">로폰마쓰(六本松)</div><div class="p">421 복합몰 · 과학관 · 카페거리</div></div></div></li>
+      <li><span class="time">늦은 오후</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">니시진 둘러보기 + 이른 저녁</div><div class="p">니시진 상점가 구경하고 저녁을 조금 일찍</div></div></div></li>
+      <li><span class="time">18:15경</span><div class="ev"><span class="num" data-n="4"></span><div class="body"><div class="h">후쿠오카타워 · 모모치 노을</div><div class="p">니시진에서 바로 이동 · <b>노을</b> 🌇</div></div></div></li>
+      <li><span class="time">저녁</span><div class="ev"><span class="num" data-n="5"></span><div class="body"><div class="h">마트 장보기 → 숙소에서 야식</div><div class="p">숙소 근처 <b>맥스밸류 익스프레스 大濠店(黒門)</b>에서 간단히 장 봐서 숙소에서 야식 (회 위주면 하이마트 福浜店 옵션)</div></div></div></li>
+    </ul>
+    <div class="callout"><b>모모치 노을</b>은 날씨를 타니, 흐리면 3일차 저녁과 통째로 바꿔도 좋아요.</div>
+  </section>
+
+  <section id="day3">
+    <div class="sec-head"><h2>3일차</h2><span class="meta">9/26 (토) · 시장·스미요시·라쿠스이엔 &amp; 야쿠인 마무리</span></div>
+    <div class="mapcard">
+      <div class="maphead"><span class="daychip" style="background:var(--d3)">3</span><span class="h">동쪽 (야나기바시·스미요시·라쿠스이엔)</span><span class="d">한 방향 동선</span></div>
+      <div class="rmap" style="--r:var(--d3)">
+        <img src="img/cs.jpg" alt="3일차 동쪽 지도">
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="73,58 73,9 88,44 84,54 80,47 54,60"/></svg>
+        <span class="pin" style="left:73%;top:58%">1</span>
+        <span class="pin" style="left:73%;top:9%">2</span>
+        <span class="pin" style="left:88%;top:44%">3</span>
+        <span class="pin" style="left:84%;top:54%">4</span>
+        <span class="pin" style="left:80%;top:47%">5</span>
+        <span class="pin" style="left:54%;top:60%">6</span>
+        <span class="edge left" style="top:30%">숙소 ↔ (지하철)</span>
+      </div>
+      <div class="rmap-note">① 야나기바시 시장 · ② 쿠시다·카와바타·나카스 · ③ 스미요시 신사 · ④ 라쿠스이엔(입장 100엔·다도 300엔) · ⑤ 스미요시 주류샵 · ⑥ 야쿠인(마지막 밤)</div>
+    </div>
+    <ul class="timeline" data-day="3">
+      <li><span class="time">오전</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">야나기바시 시장</div><div class="p">토요일 영업 · 하카타의 부엌, 간단히 먹으며 구경</div></div></div></li>
+      <li><span class="time">낮</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">쿠시다 신사 · 카와바타 · 나카스</div><div class="p">강 건너 동쪽으로 이동하며 구경</div></div></div></li>
+      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">스미요시 신사(住吉神社)</div><div class="p">치쿠젠 일노미야 · 후쿠오카에서 가장 오래된 스미요시 신사</div></div></div></li>
+      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="4"></span><div class="body"><div class="h">라쿠스이엔(楽水園)</div><div class="p">치센카이유식 일본정원 · <b>입장료 100엔</b> · <b>다도(말차) 체험 300엔</b></div></div></div></li>
+      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="5"></span><div class="body"><div class="h">스미요시 주류샵(住吉酒販)</div><div class="p">신사 근처 본점에서 <b>사케 쇼핑</b> (하카타역 아뮤플라자 지점도 있음)</div></div></div></li>
+      <li><span class="time">저녁</span><div class="ev"><span class="num" data-n="6"></span><div class="body"><div class="h">야쿠인(薬院) 로컬 · 마지막 밤</div><div class="p">현지인들이 많이 가는 야쿠인의 술집·야식으로 조용하게 마무리 → 도진마치로 귀가</div></div></div></li>
+    </ul>
+  </section>
+
+  <section id="day4">
+    <div class="sec-head"><h2>4일차</h2><span class="meta">9/27 (일) · 출국</span></div>
+    <div class="mapcard">
+      <div class="maphead"><span class="daychip" style="background:var(--d4)">4</span><span class="h">숙소 → 하카타 → 공항</span><span class="d">출발 12:10</span></div>
+      <div class="rmap" style="--r:var(--d4)">
+        <img src="img/ce.jpg" alt="4일차 공항 가는 지도">
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="8,42 60,35 83,13"/></svg>
+        <span class="pin" style="left:8%;top:42%">1</span>
+        <span class="pin" style="left:60%;top:35%">2</span>
+        <span class="pin" style="left:83%;top:13%">3</span>
+        <span class="edge left" style="top:54%">← 숙소 도진마치</span>
+      </div>
+      <div class="rmap-note">① 오호리공원(아침 산책) · ② 하카타역 경유 · ③ 후쿠오카공항(출국)</div>
+    </div>
+    <ul class="timeline" data-day="4">
+      <li><span class="time">아침</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">오호리공원 산책 · 브런치</div><div class="p">출발이 늦어 여유 있음</div></div></div></li>
+      <li><span class="time">09:00~</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">숙소 출발 → 하카타 경유</div><div class="p">도진마치 → 하카타 → 국제선 무료 셔틀</div></div></div></li>
+      <li><span class="time">10:00</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">공항 도착 · 출국</div><div class="p">국제선 2시간 전 도착 · 12:10 출발 → 13:40 서울</div></div></div></li>
+    </ul>
+  </section>
+
+  <section id="tips">
+    <div class="sec-head"><h2>알아두면 좋은 것</h2></div>
+    <div class="tips">
+      <div class="tip"><div class="t"><i style="background:var(--d1)"></i>짐 (1일차)</div><p>아파트형이라 보관 불가 + 체크인 17시. <b>텐진/아카사카 대형 코인로커</b> 활용, 대형 캐리어면 <b>ecbo cloak</b> 앱 백업.</p></div>
+      <div class="tip"><div class="t"><i style="background:var(--d2)"></i>노을</div><p>9월 말 일몰 <b>약 18:15</b>. 모모치 노을은 예보 보고 2·3일차 중 택일.</p></div>
+      <div class="tip"><div class="t"><i style="background:var(--accent)"></i>마감 시간</div><p><b>키르훼봉</b> ~20시. <b>야나기바시 시장</b>은 오전이 활기(일·일부 수 휴무 → 금·토는 OK).</p></div>
+      <div class="tip"><div class="t"><i style="background:var(--d3)"></i>기준역</div><p><b>도진마치</b>(공항선, 숙소 도보 4~5분). 오호리코엔보다 가까움. 서쪽·중심부·동쪽 모두 여기서 출발.</p></div>
+    </div>
+    <div class="callout">아직 정할 것: <b>모모치 노을 날짜(2·3일차)</b> — 여행 중 예보 보고 결정하면 됩니다. 나머지 동선은 모두 확정.</div>
+  </section>
+</main>
+
+<footer>
+  후쿠오카 3박4일 · 개인 여행 일정<br>
+  자료: 일몰(timeanddate) · 야나기바시 시장 공식 · 스텝스포츠/Alpen 매장 위치
+</footer>
+
+<script>
+(function(){
+  var N = {
+    momochi:{x:150,y:88,label:'모모치·타워',a:'middle',dx:0,dy:24,day:2},
+    nishijin:{x:120,y:190,label:'니시진',a:'middle',dx:0,dy:26,day:2},
+    sukso:{x:250,y:180,label:'숙소·도진마치',a:'middle',dx:0,dy:-18,home:true},
+    ohori:{x:300,y:250,label:'오호리공원',a:'start',dx:16,dy:5,day:2},
+    roppommatsu:{x:300,y:392,label:'로폰마쓰',a:'middle',dx:0,dy:26,day:2},
+    akasaka:{x:372,y:186,label:'아카사카',a:'middle',dx:0,dy:-16,day:1},
+    daimyo:{x:440,y:210,label:'다이묘',a:'middle',dx:0,dy:26,day:1},
+    tenjin:{x:505,y:196,label:'텐진',a:'middle',dx:0,dy:-16,day:1},
+    tenjin_minami:{x:522,y:258,label:'텐진미나미',a:'start',dx:14,dy:5,day:1},
+    yakuin:{x:505,y:318,label:'야쿠인',a:'middle',dx:0,dy:26,day:3},
+    yanagibashi:{x:560,y:296,label:'야나기바시',a:'middle',dx:0,dy:26,day:3},
+    nakasu:{x:600,y:220,label:'나카스',a:'middle',dx:0,dy:-16,day:3},
+    kushida:{x:612,y:168,label:'쿠시다·카와바타',a:'middle',dx:0,dy:-16,day:3},
+    sumiyoshi:{x:664,y:326,label:'스미요시',a:'middle',dx:0,dy:24,day:3},
+    hakata:{x:696,y:250,label:'하카타역',a:'end',dx:8,dy:22,day:3},
+    airport:{x:696,y:120,label:'후쿠오카공항',a:'end',dx:8,dy:-13,day:1}
+  };
+
+  var DAYS = {
+    day1:{color:'var(--d1)', route:['airport','akasaka','daimyo','tenjin','sukso','tenjin_minami'],
+      stops:[['airport',1],['akasaka',2],['daimyo',3],['tenjin',4],['sukso',5],['tenjin_minami',6]],
+      labels:{airport:'공항 도착',akasaka:'점심·짐보관',daimyo:'스텝스포츠',tenjin:'키르훼봉',sukso:'체크인·아마존',tenjin_minami:'야타이'}},
+    day2:{color:'var(--d2)', route:['sukso','ohori','roppommatsu','momochi','nishijin','sukso'],
+      stops:[['ohori',1],['roppommatsu',2],['momochi',3],['nishijin',4]],
+      labels:{ohori:'오호리 산책',roppommatsu:'로폰마쓰',momochi:'모모치 노을',nishijin:'니시진 야식'}},
+    day3:{color:'var(--d3)', route:['sukso','yanagibashi','kushida','sumiyoshi','yakuin','sukso'],
+      stops:[['yanagibashi',1],['kushida',2],['sumiyoshi',3],['yakuin',4]],
+      labels:{yanagibashi:'야나기바시 시장',kushida:'쿠시다·카와바타',sumiyoshi:'스미요시 신사·사케',yakuin:'야쿠인 야식'}},
+    day4:{color:'var(--d4)', route:['sukso','ohori','sukso','hakata','airport'],
+      stops:[['ohori',1],['hakata',2],['airport',3]],
+      labels:{ohori:'아침 산책',hakata:'하카타 경유',airport:'출국'}}
+  };
+
+  var VB = '0 0 730 460';
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+  function baseFeatures(){
+    return ''
+      + '<rect class="m-bg" x="0" y="0" width="730" height="460" rx="16"/>'
+      + '<path class="m-bay" d="M0,0 H730 V44 C610,64 470,38 330,56 C210,70 90,42 0,56 Z"/>'
+      + '<path class="m-river" d="M592,58 C586,130 602,188 590,238 C583,288 592,312 602,336"/>'
+      + '<ellipse class="m-pond" cx="300" cy="250" rx="46" ry="34"/>';
+  }
+
+  function labelFor(n, text){
+    var o = N[n];
+    return '<text class="m-label" x="'+(o.x+o.dx)+'" y="'+(o.y+o.dy)+'" text-anchor="'+o.a+'">'+esc(text)+'</text>';
+  }
+
+  function renderDay(key){
+    var d = DAYS[key];
+    var active = {}; d.stops.forEach(function(s){active[s[0]]=s[1];});
+    var svg = '<svg viewBox="'+VB+'" role="img" aria-label="'+key+' 동선 지도">';
+    svg += baseFeatures();
+
+    // faint context dots (non-stop, non-home)
+    Object.keys(N).forEach(function(n){
+      if(active[n]!==undefined || N[n].home) return;
+      svg += '<circle class="m-dot" cx="'+N[n].x+'" cy="'+N[n].y+'" r="4"/>';
+    });
+
+    // route
+    var pts = d.route.map(function(n){return N[n].x+','+N[n].y;}).join(' ');
+    svg += '<polyline class="m-route" points="'+pts+'" style="stroke:'+d.color+'"/>';
+
+    // stop badges + labels
+    d.stops.forEach(function(s){
+      var n=s[0], num=s[1], o=N[n];
+      if(o.home){
+        // star with offset number badge
+        svg += '<text class="m-star" x="'+o.x+'" y="'+(o.y+9)+'" text-anchor="middle">★</text>';
+        svg += '<circle cx="'+(o.x-20)+'" cy="'+(o.y-12)+'" r="12.5" fill="'+d.color+'" stroke="var(--surface-2)" stroke-width="2.5"/>';
+        svg += '<text class="m-num" x="'+(o.x-20)+'" y="'+(o.y-12)+'" dy=".35em" text-anchor="middle">'+num+'</text>';
+      }else{
+        svg += '<circle cx="'+o.x+'" cy="'+o.y+'" r="13.5" fill="'+d.color+'" stroke="var(--surface-2)" stroke-width="2.5"/>';
+        svg += '<text class="m-num" x="'+o.x+'" y="'+o.y+'" dy=".35em" text-anchor="middle">'+num+'</text>';
+      }
+      svg += labelFor(n, o.label);
+    });
+
+    // home star when home is NOT a numbered stop
+    if(active['sukso']===undefined){
+      var h=N.sukso;
+      svg += '<text class="m-star" x="'+h.x+'" y="'+(h.y+9)+'" text-anchor="middle">★</text>';
+      svg += labelFor('sukso','숙소');
+    }
+    svg += '</svg>';
+    return svg;
+  }
+
+  function renderOverview(){
+    var svg = '<svg viewBox="'+VB+'" role="img" aria-label="전체 지도">';
+    svg += baseFeatures();
+    Object.keys(N).forEach(function(n){
+      var o=N[n];
+      if(o.home) return;
+      var c = o.day?('var(--d'+o.day+')'):'var(--muted)';
+      svg += '<circle cx="'+o.x+'" cy="'+o.y+'" r="6" fill="'+c+'"/>';
+      svg += labelFor(n, o.label);
+    });
+    var h=N.sukso;
+    svg += '<text class="m-star" x="'+h.x+'" y="'+(h.y+9)+'" text-anchor="middle">★</text>';
+    svg += labelFor('sukso','숙소·도진마치');
+    svg += '</svg>';
+    return svg;
+  }
+
+  function set(id,html){var el=document.getElementById(id); if(el) el.innerHTML=html;}
+  set('map-overview', renderOverview());
+
+  // color the timeline number badges per day
+  document.querySelectorAll('.timeline').forEach(function(ul){
+    var day = ul.getAttribute('data-day');
+    var col = 'var(--d'+day+')';
+    ul.querySelectorAll('.num[data-n]').forEach(function(b){
+      b.style.background = col;
+      b.textContent = b.getAttribute('data-n');
+    });
+  });
+})();
+</script>
+</body>
+</html>
