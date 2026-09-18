@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Joonsung Park — 개인 사이트">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,440;9..144,560&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<title>Joonsung Park</title>
+<style>
+  :root{
+    --paper:#FCFBF8; --surface:#FFFFFF; --ink:#17181A; --muted:#6A6E73;
+    --line:#E8E4DC; --faint:#F1EEE7; --accent:#2B50E6;
+    --maxw:720px;
+    --serif:"Fraunces","Noto Sans KR",Georgia,serif;
+    --sans:"IBM Plex Sans","Noto Sans KR",system-ui,-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0F1113; --surface:#16181B; --ink:#ECEEF0; --muted:#969CA3;
+      --line:#282C31; --faint:#1B1E22; --accent:#7C90FF;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0F1113; --surface:#16181B; --ink:#ECEEF0; --muted:#969CA3;
+    --line:#282C31; --faint:#1B1E22; --accent:#7C90FF;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); font-size:15.5px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding-inline:22px}
+
+  /* top bar */
+  .bar{position:sticky; top:0; z-index:10;
+    background:color-mix(in srgb,var(--paper) 86%,transparent);
+    backdrop-filter:saturate(1.2) blur(8px); border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex; align-items:center; gap:16px; height:54px}
+  .bar .me{font-family:var(--serif); font-weight:560; font-size:16px; letter-spacing:.01em}
+  .bar nav{margin-left:auto; display:flex; gap:20px}
+  .bar nav a{text-decoration:none; color:var(--muted); font-size:13.5px; font-weight:500}
+  .bar nav a:hover{color:var(--ink)}
+  @media (max-width:540px){ .bar nav{display:none} }
+
+  main{padding-block:8px 40px}
+  section{padding-block:34px; border-top:1px solid var(--line)}
+  section:first-of-type{border-top:0}
+  .eyebrow{font-size:11.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 16px}
+
+  /* hero */
+  .hero{padding-block:52px 30px; border:0}
+  .hero h1{font-family:var(--serif); font-weight:340; font-size:clamp(40px,9vw,66px);
+    line-height:1.04; letter-spacing:-.01em; margin:0; text-wrap:balance}
+  .hero .role{font-size:18px; color:var(--ink); margin:16px 0 0; font-weight:500}
+  .hero .tag{font-size:16px; color:var(--muted); margin:8px 0 0; max-width:52ch}
+  .links{display:flex; flex-wrap:wrap; gap:9px; margin-top:24px}
+  .links a{display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+    font-size:13.5px; font-weight:500; color:var(--ink);
+    border:1px solid var(--line); border-radius:999px; padding:7px 14px; background:var(--surface)}
+  .links a:hover{border-color:var(--accent); color:var(--accent)}
+  .links svg{width:15px; height:15px; display:block}
+
+  /* about */
+  .about p{margin:0; font-size:16.5px; line-height:1.7; max-width:60ch}
+
+  /* experience / education entries */
+  .entry{display:grid; grid-template-columns:1fr auto; gap:4px 24px; padding:18px 0; border-top:1px solid var(--faint)}
+  .entry:first-of-type{border-top:0; padding-top:2px}
+  .entry .role{font-weight:600; font-size:16px}
+  .entry .org{color:var(--muted); font-size:14.5px; margin-top:1px}
+  .entry .when{color:var(--muted); font-size:13px; font-variant-numeric:tabular-nums; white-space:nowrap; text-align:right; padding-top:2px}
+  .entry ul{grid-column:1 / -1; margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:14.5px}
+  .entry ul li{margin:3px 0}
+  @media (max-width:540px){
+    .entry{grid-template-columns:1fr}
+    .entry .when{text-align:left; padding-top:2px}
+  }
+
+  /* skills */
+  .skillgroup{display:grid; grid-template-columns:120px 1fr; gap:10px 18px; padding:12px 0; border-top:1px solid var(--faint)}
+  .skillgroup:first-of-type{border-top:0}
+  .skillgroup .k{font-size:13px; color:var(--muted); font-weight:600; padding-top:5px}
+  .tags{display:flex; flex-wrap:wrap; gap:8px}
+  .tags span{border:1px solid var(--line); border-radius:7px; padding:5px 11px; font-size:13.5px; background:var(--surface)}
+  @media (max-width:540px){ .skillgroup{grid-template-columns:1fr; gap:6px} }
+
+  footer{border-top:1px solid var(--line); padding-block:26px 40px; color:var(--muted); font-size:13px;
+    display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  footer a{color:var(--muted)}
+  ::selection{background:color-mix(in srgb,var(--accent) 22%,transparent)}
+  html{scroll-behavior:smooth}
+  section{scroll-margin-top:64px}
+</style>
+<style>img{max-width:100%;height:auto}</style>
+</head>
+<body>
+<!-- ===== 편집 안내: 대괄호 [ ] 안의 내용을 본인 정보로 바꾸세요. 링크의 href="#" 도 실제 주소로. ===== -->
+
+<header class="bar">
+  <div class="wrap">
+    <span class="me">Joonsung Park</span>
+    <nav>
+      <a href="#about">소개</a>
+      <a href="#experience">경력</a>
+      <a href="#skills">스킬</a>
+      <a href="#education">학력</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Joonsung&nbsp;Park</h1>
+    <p class="role">[직함 · 예: Software Engineer]</p>
+    <p class="tag">[한 줄 소개 — 무엇을 하고, 무엇에 관심 있는지 한 문장으로. 예: 백엔드와 데이터 파이프라인을 만드는 엔지니어.]</p>
+    <div class="links">
+      <a href="https://github.com/[아이디]" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:[you@email.com]">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 4.5L14 4"/></svg>
+        Email
+      </a>
+      <a href="https://[링크드인-또는-다른-링크]" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.6 2.4a1.2 1.2 0 11-.01 2.41A1.2 1.2 0 013.6 2.4zM2.5 5.8h2.2V13H2.5V5.8zM6.3 5.8h2.1v1h.03c.29-.53 1-1.08 2.02-1.08 2.16 0 2.56 1.4 2.56 3.23V13h-2.2V9.4c0-.86-.02-1.96-1.2-1.96-1.2 0-1.38.93-1.38 1.9V13H6.3V5.8z"/></svg>
+        Link
+      </a>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <p class="eyebrow">소개</p>
+    <p>[여기에 2~3문장으로 본인을 소개하세요. 어떤 일을 해왔고, 무엇을 잘하며, 요즘 어떤 것에 관심이 있는지. 담백하게 한 단락이면 충분합니다.]</p>
+  </section>
+
+  <section id="experience">
+    <p class="eyebrow">경력</p>
+
+    <div class="entry">
+      <div>
+        <div class="role">[직함]</div>
+        <div class="org">[회사/조직]</div>
+        <ul>
+          <li>[한 일·성과를 한 줄로. 숫자가 있으면 더 좋아요.]</li>
+          <li>[두 번째 항목.]</li>
+        </ul>
+      </div>
+      <div class="when">[2024 — 현재]</div>
+    </div>
+
+    <div class="entry">
+      <div>
+        <div class="role">[직함]</div>
+        <div class="org">[회사/조직]</div>
+        <ul>
+          <li>[한 일·성과.]</li>
+          <li>[두 번째 항목.]</li>
+        </ul>
+      </div>
+      <div class="when">[2022 — 2024]</div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <p class="eyebrow">스킬</p>
+    <div class="skillgroup">
+      <div class="k">Languages</div>
+      <div class="tags"><span>[Python]</span><span>[TypeScript]</span><span>[Go]</span></div>
+    </div>
+    <div class="skillgroup">
+      <div class="k">Frameworks</div>
+      <div class="tags"><span>[React]</span><span>[FastAPI]</span><span>[Node.js]</span></div>
+    </div>
+    <div class="skillgroup">
+      <div class="k">Tools</div>
+      <div class="tags"><span>[Git]</span><span>[Docker]</span><span>[AWS]</span></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <p class="eyebrow">학력</p>
+    <div class="entry">
+      <div>
+        <div class="role">[학위 · 전공]</div>
+        <div class="org">[학교]</div>
+      </div>
+      <div class="when">[2016 — 2020]</div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>© <span id="yr"></span> Joonsung Park</span>
+  <span>Seoul, Korea</span>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
