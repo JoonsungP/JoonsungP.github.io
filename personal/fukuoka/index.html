@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="후쿠오카 3박4일 여행 일정 — 동선 지도와 시간표">
@@ -189,8 +188,27 @@
     background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent);
     border-radius:10px;padding:10px 13px}
   .tipx .tip-body b{color:var(--ink)}
+
+  /* --- in-page editor (only active with #edit) --- */
+  body.editing{padding-bottom:64px}
+  body.editing [contenteditable="true"]{outline:1px dashed color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:2px;border-radius:3px}
+  body.editing [contenteditable="true"]:focus{outline:2px solid var(--accent)}
+  .ed-bar{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:flex;gap:8px;align-items:center;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);
+    border-top:1px solid var(--line);box-shadow:0 -4px 18px rgba(0,0,0,.14);font-size:13px;flex-wrap:wrap}
+  .ed-bar .ed-title{font-weight:800;color:var(--accent);white-space:nowrap}
+  .ed-bar button{font:inherit;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface-2);
+    color:var(--ink);border-radius:8px;padding:6px 12px}
+  .ed-bar button:hover{border-color:var(--accent)}
+  .ed-bar .ed-status{margin-left:auto;color:var(--muted);font-size:12px;min-width:0}
+  .ed-addtip{margin-top:8px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;color:var(--accent);
+    border:1px dashed var(--line);background:transparent;border-radius:999px;padding:3px 10px}
+  /* image block inside tips/text (kept in saved output) */
+  .tip-figure{margin:10px 0 0}
+  .tip-figure img{display:block;width:100%;border-radius:10px;border:1px solid var(--line)}
+  .tip-figure figcaption{margin-top:5px;font-size:12px;color:var(--muted)}
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@600;700;800&amp;display=swap">
 <style>
   .crumb{max-width:760px;margin:0 auto;padding:12px 16px 2px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .crumb a{color:var(--muted);text-decoration:none}
@@ -200,7 +218,7 @@
 </style>
 <style>img{max-width:100%;height:auto}</style>
 </head>
-<body>
+<body class="">
 
 <div class="crumb">
   <a href="../../">Joonsung Park</a><span class="sep">›</span>
@@ -225,19 +243,19 @@
   <section class="hero">
     <div class="kicker">9월 24 – 27 · 오호리공원</div>
     <h1>후쿠오카 3박4일</h1>
-    <p class="sub">숙소(도진마치)를 축으로, 하루를 한 지역으로 묶은 여유로운 동선</p>
+    <p class="sub">by Joonsung Park</p>
     <div class="facts">
       <div class="fact"><div class="t">가는 편 · 9/24</div><div class="v"><b>서울 11:05</b> → <b>후쿠오카 12:30</b></div></div>
       <div class="fact"><div class="t">오는 편 · 9/27</div><div class="v"><b>후쿠오카 12:10</b> → <b>서울 13:40</b></div></div>
       <div class="fact"><div class="t">숙소</div><div class="v">BUENA VISTA OHORI PARK<br><small>주오구 아라토 · 도진마치 도보 4~5분 · 체크인 17:00</small></div></div>
-      <div class="fact"><div class="t">일행</div><div class="v">첫날 <b>19:00</b> 합류<br><small>공항 마중 X · 야타이 야식 함께</small></div></div>
+      <div class="fact"><div class="t">일행</div><div class="v">첫날 <b>19:00</b> 합류<br><small>공항 마중 X · 숙소 근처에서 식사</small></div></div>
     </div>
   </section>
 
   <section id="overview">
-    <div class="sec-head"><h2>전체 지도</h2><span class="meta">지역·기준역 한눈에</span></div>
+    <div class="sec-head"><h2>전체 지도</h2><span class="meta"><br></span></div>
     <div class="mapcard">
-      <div class="mapbox" id="map-overview"></div>
+      <div class="mapbox" id="map-overview"><svg viewBox="0 0 730 460" role="img" aria-label="전체 지도"><rect class="m-bg" x="0" y="0" width="730" height="460" rx="16"></rect><path class="m-bay" d="M0,0 H730 V44 C610,64 470,38 330,56 C210,70 90,42 0,56 Z"></path><path class="m-river" d="M592,58 C586,130 602,188 590,238 C583,288 592,312 602,336"></path><ellipse class="m-pond" cx="300" cy="250" rx="46" ry="34"></ellipse><circle cx="150" cy="88" r="6" fill="var(--d2)"></circle><text class="m-label" x="150" y="112" text-anchor="middle">모모치·타워</text><circle cx="120" cy="190" r="6" fill="var(--d2)"></circle><text class="m-label" x="120" y="216" text-anchor="middle">니시진</text><circle cx="300" cy="250" r="6" fill="var(--d2)"></circle><text class="m-label" x="316" y="255" text-anchor="start">오호리공원</text><circle cx="300" cy="392" r="6" fill="var(--d2)"></circle><text class="m-label" x="300" y="418" text-anchor="middle">로폰마쓰</text><circle cx="372" cy="186" r="6" fill="var(--d1)"></circle><text class="m-label" x="372" y="170" text-anchor="middle">아카사카</text><circle cx="440" cy="210" r="6" fill="var(--d1)"></circle><text class="m-label" x="440" y="236" text-anchor="middle">다이묘</text><circle cx="505" cy="196" r="6" fill="var(--d1)"></circle><text class="m-label" x="505" y="180" text-anchor="middle">텐진</text><circle cx="522" cy="258" r="6" fill="var(--d1)"></circle><text class="m-label" x="536" y="263" text-anchor="start">텐진미나미</text><circle cx="505" cy="318" r="6" fill="var(--d3)"></circle><text class="m-label" x="505" y="344" text-anchor="middle">야쿠인</text><circle cx="560" cy="296" r="6" fill="var(--d3)"></circle><text class="m-label" x="560" y="322" text-anchor="middle">야나기바시</text><circle cx="600" cy="220" r="6" fill="var(--d3)"></circle><text class="m-label" x="600" y="204" text-anchor="middle">나카스</text><circle cx="612" cy="168" r="6" fill="var(--d3)"></circle><text class="m-label" x="612" y="152" text-anchor="middle">쿠시다·카와바타</text><circle cx="664" cy="326" r="6" fill="var(--d3)"></circle><text class="m-label" x="664" y="350" text-anchor="middle">스미요시</text><circle cx="696" cy="250" r="6" fill="var(--d3)"></circle><text class="m-label" x="704" y="272" text-anchor="end">하카타역</text><circle cx="696" cy="120" r="6" fill="var(--d1)"></circle><text class="m-label" x="704" y="107" text-anchor="end">후쿠오카공항</text><text class="m-star" x="250" y="189" text-anchor="middle">★</text><text class="m-label" x="250" y="162" text-anchor="middle">숙소·도진마치</text></svg></div>
       <div class="legend">
         <span class="star">★</span><span>숙소(도진마치)</span>
         <span><i style="background:var(--d1)"></i>1일 중심부</span>
@@ -245,7 +263,7 @@
         <span><i style="background:var(--d3)"></i>3일 동쪽</span>
       </div>
     </div>
-    <div class="callout">서쪽 <b>모모치·니시진</b>은 숙소 코앞, 중심부 <b>텐진·다이묘</b>는 지하철 3~5정거장, 동쪽 <b>나카스·하카타</b>는 그다음이에요. 이 순서대로 1→2→3일차를 배치했습니다.</div>
+    <div class="callout">서쪽 <b>모모치·니시진</b>은 숙소 코앞, 중심부 <b>텐진·다이묘</b>는 지하철 3~5정거장, 동쪽 <b>나카스·하카타</b>.</div>
   </section>
 
   <section id="day1">
@@ -254,7 +272,7 @@
       <div class="maphead"><span class="daychip" style="background:var(--d1)">1</span><span class="h">중심부 (아카사카·다이묘·텐진)</span><span class="d">도착 12:30</span></div>
       <div class="rmap" style="--r:var(--d1)">
         <img src="img/cs.jpg" alt="1일차 중심부 지도">
-        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="36,20 45,24 52,22"/></svg>
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="36,20 45,24 52,22"></polyline></svg>
         <span class="pin" style="left:36%;top:20%">2</span>
         <span class="pin" style="left:45%;top:24%">3</span>
         <span class="pin" style="left:52%;top:22%">4</span>
@@ -265,12 +283,12 @@
       <div class="rmap-note">② 아카사카 · ③ 다이묘(스텝스포츠) · ④ 텐진(키르훼봉) &nbsp;|&nbsp; ① 공항·⑤ 숙소·⑥ 숙소 근처 식당은 프레임 밖(서쪽)</div>
     </div>
     <ul class="timeline" data-day="1">
-      <li><span class="time">12:30</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">후쿠오카공항 도착</div><div class="p">입국·수하물 → 국제선에서 무료 셔틀로 국내선(지하철)로 이동</div></div></div></li>
-      <li><span class="time">13:30~</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">텐진/아카사카 · 짐 보관 &amp; 늦은 점심</div><div class="p">공항선으로 이동 → <b>대형 코인로커에 캐리어 보관</b> (숙소는 아파트형이라 보관 불가)</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">대형 코인로커는 <b>텐진역·아카사카역</b>에 여유가 있어요. 대형 캐리어가 안 들어가면 <b>ecbo cloak</b> 앱으로 근처 상점 짐보관을 예약하는 게 백업입니다. 체크인이 17시부터라 그전까진 맡겨두는 게 편해요.</div></details></div></div></li>
-      <li><span class="time">14:30~</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">스텝스포츠(다이묘) · 다이묘 거리</div><div class="p">러닝 전문점 <b>스텝스포츠 福岡店</b>에서 러닝 용품 → 다이묘 둘러보기</div></div></div></li>
-      <li><span class="time">16:00</span><div class="ev"><span class="num" data-n="4"></span><div class="body"><div class="h">키르훼봉 타르트 포장</div><div class="p">텐진 매장(~20시 마감). 이 동네에 있는 김에 사서 들고 숙소로</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">매장은 <b>20시 마감</b>. 타르트는 하루 안에 먹는 게 제일 맛있어서, 이 동네에 있는 김에 사서 숙소 냉장고에 넣어두세요.</div></details></div></div></li>
-      <li><span class="time">17:00</span><div class="ev"><span class="num" data-n="5"></span><div class="body"><div class="h">체크인 · 아마존 수령</div><div class="p">도진마치 → 도보 4~5분 체크인 · <b>숙소 아래 패밀리마트에서 아마존 물품 수령</b> · 타르트 냉장</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">아마존 재팬 편의점 수령은 <b>숙소 아래 패밀리마트</b>에서. 아파트형이라 체크인(17시) 전엔 프런트 짐보관이 없으니 로커를 활용하세요.</div></details></div></div></li>
-      <li><span class="time">19:00~</span><div class="ev"><span class="num" data-n="6"></span><div class="body"><div class="h">숙소 근처 현지인 식당</div><div class="p">일행 합류 → 짐은 숙소에 두고 숙소 근처 현지인 식당에서 식사</div></div></div></li>
+      <li><span class="time">12:30</span><div class="ev"><span class="num" data-n="1" style="background: var(--d1);">1</span><div class="body"><div class="h">후쿠오카공항 도착</div><div class="p">입국·수하물 → 국제선에서 무료 셔틀로 국내선(지하철)로 이동</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">* 국제선 → 국내선 셔틀 버스 이용 방법<div>① 국제선 터미널 1층에서 "Shuttle Bus (INT'L ⇔ Domestic, Subway)" 혹은 "국내선 연결 버스(지하철)" 표지판을 따라 이동</div><div><img src="img/tip-1789794090387.jpg" alt=""></div><div><div><br class="Apple-interchange-newline">② 정류장은 아래 사진과 같이 위치</div></div><figure class="tip-figure"><img src="img/tip-1789794173049.jpg" alt=""></figure><figure class="tip-figure"><img src="img/tip-1789794213690.jpg" alt=""></figure><figure class="tip-figure"><span style="font-size: 12px;">약 5 ~ 6분 간격으로 버스가 옴. 셔틀 버스는 국내선 터미널 행만 있으며 </span><b style="color: rgb(234, 240, 244); font-size: 12px;">무료</b><span style="font-size: 12px;">이니 대기 후 탑승하면 됨.</span></figure></div></details></div></div></li>
+      <li><span class="time">13:30~</span><div class="ev"><span class="num" data-n="2" style="background: var(--d1);">2</span><div class="body"><div class="h">텐진/아카사카 · 짐 보관 &amp; 늦은 점심</div><div class="p">공항선으로 이동 → <b>대형 코인로커에 캐리어 보관</b> (숙소는 아파트형이라 보관 불가)</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">대형 코인로커는 <b>텐진역·아카사카역</b>에 여유가 있어요. 대형 캐리어가 안 들어가면 <b>ecbo cloak</b> 앱으로 근처 상점 짐보관을 예약하는 게 백업입니다. 체크인이 17시부터라 그전까진 맡겨두는 게 편해요.</div></details></div></div></li>
+      <li><span class="time">14:30~</span><div class="ev"><span class="num" data-n="3" style="background: var(--d1);">3</span><div class="body"><div class="h">스텝스포츠(다이묘) · 다이묘 거리</div><div class="p">러닝 전문점 <b>스텝스포츠 福岡店</b>에서 러닝 용품 → 다이묘 둘러보기</div></div></div></li>
+      <li><span class="time">16:00</span><div class="ev"><span class="num" data-n="4" style="background: var(--d1);">4</span><div class="body"><div class="h">키르훼봉 타르트 포장</div><div class="p">텐진 매장(~20시 마감). 이 동네에 있는 김에 사서 들고 숙소로</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">매장은 <b>20시 마감</b>. 타르트는 하루 안에 먹는 게 제일 맛있어서, 이 동네에 있는 김에 사서 숙소 냉장고에 넣어두세요.</div></details></div></div></li>
+      <li><span class="time">17:00</span><div class="ev"><span class="num" data-n="5" style="background: var(--d1);">5</span><div class="body"><div class="h">체크인 · 아마존 수령</div><div class="p">도진마치 → 도보 4~5분 체크인 · <b>숙소 아래 패밀리마트에서 아마존 물품 수령</b> · 타르트 냉장</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">아마존 재팬 편의점 수령은 <b>숙소 아래 패밀리마트</b>에서. 아파트형이라 체크인(17시) 전엔 프런트 짐보관이 없으니 로커를 활용하세요.</div></details></div></div></li>
+      <li><span class="time">19:00~</span><div class="ev"><span class="num" data-n="6" style="background: var(--d1);">6</span><div class="body"><div class="h">숙소 근처 현지인 식당</div><div class="p">일행 합류 → 짐은 숙소에 두고 숙소 근처 현지인 식당에서 식사</div></div></div></li>
     </ul>
   </section>
 
@@ -280,7 +298,7 @@
       <div class="maphead"><span class="daychip" style="background:var(--d2)">2</span><span class="h">숙소 주변 (서·남쪽)</span><span class="d">노을 18:15경</span></div>
       <div class="rmap" style="--r:var(--d2)">
         <img src="img/west.jpg" alt="2일차 서쪽 지도">
-        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="62,30 71,50 73,84 32,77 17,21 61,38 62,30"/></svg>
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="62,30 71,50 73,84 32,77 17,21 61,38 62,30"></polyline></svg>
         <span class="pin home" style="left:62%;top:30%"></span>
         <span class="pin" style="left:71%;top:50%">1</span>
         <span class="pin" style="left:73%;top:84%">2</span>
@@ -291,11 +309,11 @@
       <div class="rmap-note">★ 숙소 · ① 오호리공원 · ② 로폰마쓰 · ③ 니시진(둘러보기·이른 저녁) · ④ 후쿠오카타워·모모치(노을) · ⑤ 마트 장보기·숙소 야식</div>
     </div>
     <ul class="timeline" data-day="2">
-      <li><span class="time">오전</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">오호리공원 산책</div><div class="p">숙소 앞 · 일본정원(옵션)까지</div></div></div></li>
-      <li><span class="time">낮</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">로폰마쓰(六本松)</div><div class="p">421 복합몰 · 과학관 · 카페거리</div></div></div></li>
-      <li><span class="time">늦은 오후</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">니시진 둘러보기 + 이른 저녁</div><div class="p">니시진 상점가 구경하고 저녁을 조금 일찍</div></div></div></li>
-      <li><span class="time">18:15경</span><div class="ev"><span class="num" data-n="4"></span><div class="body"><div class="h">후쿠오카타워 · 모모치 노을</div><div class="p">니시진에서 바로 이동 · <b>노을</b> 🌇</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">9월 말 일몰은 <b>약 18:15</b>. 니시진에서 타워까지 가까워요. 흐리면 노을은 <b>3일차 저녁과 통째로 바꿔도</b> 됩니다.</div></details></div></div></li>
-      <li><span class="time">저녁</span><div class="ev"><span class="num" data-n="5"></span><div class="body"><div class="h">마트 장보기 → 숙소에서 야식</div><div class="p">숙소 근처 <b>맥스밸류 익스프레스 大濠店(黒門)</b>에서 간단히 장 봐서 숙소에서 야식 (회 위주면 하이마트 福浜店 옵션)</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body"><b>맥스밸류 익스프레스 大濠店(黒門)</b>이 숙소 바로 근처이고 늦게까지 열어 야식 장보기에 편해요. 회·해산물로 제대로 먹고 싶으면 <b>하이마트 福浜店</b>(생선시장형)이 대안입니다.</div></details></div></div></li>
+      <li><span class="time">오전</span><div class="ev"><span class="num" data-n="1" style="background: var(--d2);">1</span><div class="body"><div class="h">오호리공원 산책</div><div class="p">숙소 앞 · 일본정원(옵션)까지</div></div></div></li>
+      <li><span class="time">낮</span><div class="ev"><span class="num" data-n="2" style="background: var(--d2);">2</span><div class="body"><div class="h">로폰마쓰(六本松)</div><div class="p">421 복합몰 · 과학관 · 카페거리</div></div></div></li>
+      <li><span class="time">늦은 오후</span><div class="ev"><span class="num" data-n="3" style="background: var(--d2);">3</span><div class="body"><div class="h">니시진 둘러보기 + 이른 저녁</div><div class="p">니시진 상점가 구경하고 저녁을 조금 일찍</div></div></div></li>
+      <li><span class="time">18:15경</span><div class="ev"><span class="num" data-n="4" style="background: var(--d2);">4</span><div class="body"><div class="h">후쿠오카타워 · 모모치 노을</div><div class="p">니시진에서 바로 이동 · <b>노을</b> 🌇</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">9월 말 일몰은 <b>약 18:15</b>. 니시진에서 타워까지 가까워요. 흐리면 노을은 <b>3일차 저녁과 통째로 바꿔도</b> 됩니다.</div></details></div></div></li>
+      <li><span class="time">저녁</span><div class="ev"><span class="num" data-n="5" style="background: var(--d2);">5</span><div class="body"><div class="h">마트 장보기 → 숙소에서 야식</div><div class="p">숙소 근처 <b>맥스밸류 익스프레스 大濠店(黒門)</b>에서 간단히 장 봐서 숙소에서 야식 (회 위주면 하이마트 福浜店 옵션)</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body"><b>맥스밸류 익스프레스 大濠店(黒門)</b>이 숙소 바로 근처이고 늦게까지 열어 야식 장보기에 편해요. 회·해산물로 제대로 먹고 싶으면 <b>하이마트 福浜店</b>(생선시장형)이 대안입니다.</div></details></div></div></li>
     </ul>
     <div class="callout"><b>모모치 노을</b>은 날씨를 타니, 흐리면 3일차 저녁과 통째로 바꿔도 좋아요.</div>
   </section>
@@ -306,7 +324,7 @@
       <div class="maphead"><span class="daychip" style="background:var(--d3)">3</span><span class="h">동쪽 (야나기바시·스미요시·라쿠스이엔)</span><span class="d">한 방향 동선</span></div>
       <div class="rmap" style="--r:var(--d3)">
         <img src="img/cs.jpg" alt="3일차 동쪽 지도">
-        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="73,58 73,9 88,44 84,54 80,47 54,60"/></svg>
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="73,58 73,9 88,44 84,54 80,47 54,60"></polyline></svg>
         <span class="pin" style="left:73%;top:58%">1</span>
         <span class="pin" style="left:73%;top:9%">2</span>
         <span class="pin" style="left:88%;top:44%">3</span>
@@ -318,12 +336,12 @@
       <div class="rmap-note">① 야나기바시 시장 · ② 쿠시다·카와바타·나카스 · ③ 스미요시 신사 · ④ 라쿠스이엔(입장 100엔·다도 300엔) · ⑤ 스미요시 주류샵 · ⑥ 야쿠인(마지막 밤)</div>
     </div>
     <ul class="timeline" data-day="3">
-      <li><span class="time">오전</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">야나기바시 시장</div><div class="p">토요일 영업 · 하카타의 부엌, 간단히 먹으며 구경</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body"><b>오전이 가장 활기</b>차요. 일요일·일부 수요일 휴무지만 이번 토요일은 문제없습니다. 시장 안에서 간단히 요기하며 구경하기 좋아요.</div></details></div></div></li>
-      <li><span class="time">낮</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">쿠시다 신사 · 카와바타 · 나카스</div><div class="p">강 건너 동쪽으로 이동하며 구경</div></div></div></li>
-      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">스미요시 신사(住吉神社)</div><div class="p">치쿠젠 일노미야 · 후쿠오카에서 가장 오래된 스미요시 신사</div></div></div></li>
-      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="4"></span><div class="body"><div class="h">라쿠스이엔(楽水園)</div><div class="p">치센카이유식 일본정원 · <b>입장료 100엔</b> · <b>다도(말차) 체험 300엔</b></div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">치센카이유식 일본정원. 다실에서 <b>말차 한 잔(300엔)</b>과 함께 정원을 바라보는 걸 추천해요. 입장료는 100엔.</div></details></div></div></li>
-      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="5"></span><div class="body"><div class="h">스미요시 주류샵(住吉酒販)</div><div class="p">신사 근처 본점에서 <b>사케 쇼핑</b> (하카타역 아뮤플라자 지점도 있음)</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">본점은 스미요시 신사 근처. 짐이 부담되면 <b>하카타역 아뮤플라자 지점</b>에서 사서 바로 캐리어에 넣어도 돼요.</div></details></div></div></li>
-      <li><span class="time">저녁</span><div class="ev"><span class="num" data-n="6"></span><div class="body"><div class="h">야쿠인(薬院) 로컬 · 마지막 밤</div><div class="p">현지인들이 많이 가는 야쿠인의 술집·야식으로 조용하게 마무리 → 도진마치로 귀가</div></div></div></li>
+      <li><span class="time">오전</span><div class="ev"><span class="num" data-n="1" style="background: var(--d3);">1</span><div class="body"><div class="h">야나기바시 시장</div><div class="p">토요일 영업 · 하카타의 부엌, 간단히 먹으며 구경</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body"><b>오전이 가장 활기</b>차요. 일요일·일부 수요일 휴무지만 이번 토요일은 문제없습니다. 시장 안에서 간단히 요기하며 구경하기 좋아요.</div></details></div></div></li>
+      <li><span class="time">낮</span><div class="ev"><span class="num" data-n="2" style="background: var(--d3);">2</span><div class="body"><div class="h">쿠시다 신사 · 카와바타 · 나카스</div><div class="p">강 건너 동쪽으로 이동하며 구경</div></div></div></li>
+      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="3" style="background: var(--d3);">3</span><div class="body"><div class="h">스미요시 신사(住吉神社)</div><div class="p">치쿠젠 일노미야 · 후쿠오카에서 가장 오래된 스미요시 신사</div></div></div></li>
+      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="4" style="background: var(--d3);">4</span><div class="body"><div class="h">라쿠스이엔(楽水園)</div><div class="p">치센카이유식 일본정원 · <b>입장료 100엔</b> · <b>다도(말차) 체험 300엔</b></div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">치센카이유식 일본정원. 다실에서 <b>말차 한 잔(300엔)</b>과 함께 정원을 바라보는 걸 추천해요. 입장료는 100엔.</div></details></div></div></li>
+      <li><span class="time">오후</span><div class="ev"><span class="num" data-n="5" style="background: var(--d3);">5</span><div class="body"><div class="h">스미요시 주류샵(住吉酒販)</div><div class="p">신사 근처 본점에서 <b>사케 쇼핑</b> (하카타역 아뮤플라자 지점도 있음)</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">본점은 스미요시 신사 근처. 짐이 부담되면 <b>하카타역 아뮤플라자 지점</b>에서 사서 바로 캐리어에 넣어도 돼요.</div></details></div></div></li>
+      <li><span class="time">저녁</span><div class="ev"><span class="num" data-n="6" style="background: var(--d3);">6</span><div class="body"><div class="h">야쿠인(薬院) 로컬 · 마지막 밤</div><div class="p">현지인들이 많이 가는 야쿠인의 술집·야식으로 조용하게 마무리 → 도진마치로 귀가</div></div></div></li>
     </ul>
   </section>
 
@@ -333,7 +351,7 @@
       <div class="maphead"><span class="daychip" style="background:var(--d4)">4</span><span class="h">숙소 → 하카타 → 공항</span><span class="d">출발 12:10</span></div>
       <div class="rmap" style="--r:var(--d4)">
         <img src="img/ce.jpg" alt="4일차 공항 가는 지도">
-        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="8,42 60,35 83,13"/></svg>
+        <svg class="rroute" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="8,42 60,35 83,13"></polyline></svg>
         <span class="pin" style="left:8%;top:42%">1</span>
         <span class="pin" style="left:60%;top:35%">2</span>
         <span class="pin" style="left:83%;top:13%">3</span>
@@ -342,9 +360,9 @@
       <div class="rmap-note">① 오호리공원(아침 산책) · ② 하카타역 경유 · ③ 후쿠오카공항(출국)</div>
     </div>
     <ul class="timeline" data-day="4">
-      <li><span class="time">아침</span><div class="ev"><span class="num" data-n="1"></span><div class="body"><div class="h">오호리공원 산책 · 브런치</div><div class="p">출발이 늦어 여유 있음</div></div></div></li>
-      <li><span class="time">09:00~</span><div class="ev"><span class="num" data-n="2"></span><div class="body"><div class="h">숙소 출발 → 하카타 경유</div><div class="p">도진마치 → 하카타 → 국제선 무료 셔틀</div></div></div></li>
-      <li><span class="time">10:00</span><div class="ev"><span class="num" data-n="3"></span><div class="body"><div class="h">공항 도착 · 출국</div><div class="p">국제선 2시간 전 도착 · 12:10 출발 → 13:40 서울</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">국제선은 지하철 종점(국내선 터미널)에서 <b>무료 셔틀</b>로 이동해요. 체크인·보안 시간을 감안해 <b>2시간 전 도착</b>을 권장합니다.</div></details></div></div></li>
+      <li><span class="time">아침</span><div class="ev"><span class="num" data-n="1" style="background: var(--d4);">1</span><div class="body"><div class="h">오호리공원 산책 · 브런치</div><div class="p">출발이 늦어 여유 있음</div></div></div></li>
+      <li><span class="time">09:00~</span><div class="ev"><span class="num" data-n="2" style="background: var(--d4);">2</span><div class="body"><div class="h">숙소 출발 → 하카타 경유</div><div class="p">도진마치 → 하카타 → 국제선 무료 셔틀</div></div></div></li>
+      <li><span class="time">10:00</span><div class="ev"><span class="num" data-n="3" style="background: var(--d4);">3</span><div class="body"><div class="h">공항 도착 · 출국</div><div class="p">국제선 2시간 전 도착 · 12:10 출발 → 13:40 서울</div><details class="tipx"><summary>팁 <span class="chev">▾</span></summary><div class="tip-body">국제선은 지하철 종점(국내선 터미널)에서 <b>무료 셔틀</b>로 이동해요. 체크인·보안 시간을 감안해 <b>2시간 전 도착</b>을 권장합니다.</div></details></div></div></li>
     </ul>
   </section>
 
@@ -489,5 +507,105 @@
   });
 })();
 </script>
-</body>
-</html>
+<script>
+(function(){
+  if((location.hash||'').replace('#','')!=='edit') return;   // 방문자에겐 안 보임
+  document.body.classList.add('editing');
+  var dirHandle=null, lastEl=null;
+
+  var SEL='.ev .body .h, .ev .body .p, .tipx .tip-body, .callout, .rmap-note, .hero .sub, .fact .v, .sec-head .meta, .tips .tip p, .tips .tip .t, figcaption';
+  document.querySelectorAll(SEL).forEach(function(el){ el.setAttribute('contenteditable','true'); });
+  document.addEventListener('focusin', function(e){ if(e.target && e.target.isContentEditable) lastEl=e.target; });
+
+  document.querySelectorAll('.timeline .ev .body').forEach(function(body){
+    if(body.querySelector('.tipx')) return;
+    var b=document.createElement('button');
+    b.type='button'; b.className='ed-addtip'; b.setAttribute('data-editor',''); b.textContent='+ 팁';
+    b.onclick=function(){
+      var d=document.createElement('details'); d.className='tipx'; d.setAttribute('open','');
+      d.innerHTML='<summary>팁 <span class="chev">▾</span></summary><div class="tip-body" contenteditable="true">여기에 팁을 적으세요</div>';
+      body.appendChild(d); var tb=d.querySelector('.tip-body'); lastEl=tb; tb.focus(); b.remove();
+    };
+    body.appendChild(b);
+  });
+
+  var bar=document.createElement('div'); bar.className='ed-bar'; bar.setAttribute('data-editor','');
+  bar.innerHTML='<span class="ed-title">편집 모드</span>'
+    +'<button type="button" data-editor id="ed-connect">📁 폴더 연결</button>'
+    +'<button type="button" data-editor id="ed-img">🖼 사진</button>'
+    +'<button type="button" data-editor id="ed-save">💾 저장</button>'
+    +'<button type="button" data-editor id="ed-exit">나가기</button>'
+    +'<span class="ed-status" id="ed-status">① 폴더 연결 → ② 글자 클릭해 수정 · 사진</span>';
+  document.body.appendChild(bar);
+  var st=document.getElementById('ed-status'); function status(m){ st.textContent=m; }
+
+  document.getElementById('ed-exit').onclick=function(){ location.hash=''; location.reload(); };
+
+  document.getElementById('ed-connect').onclick=async function(){
+    try{ await connect(); status('폴더 연결됨 ✓  이제 글자 클릭 수정 · 사진 · 저장'); }
+    catch(e){ status(e.message); }
+  };
+
+  var fileInput=document.createElement('input'); fileInput.type='file'; fileInput.accept='image/*';
+  fileInput.setAttribute('data-editor',''); fileInput.style.display='none'; document.body.appendChild(fileInput);
+
+  document.getElementById('ed-img').onclick=function(){
+    if(!dirHandle){ status('먼저 “📁 폴더 연결”을 누르세요'); return; }
+    if(!lastEl){ status('사진 넣을 글 위치를 먼저 클릭하세요'); return; }
+    fileInput.click();
+  };
+  fileInput.onchange=async function(){
+    var f=fileInput.files[0]; if(!f) return;
+    try{
+      var imgDir=await dirHandle.getDirectoryHandle('img',{create:true});
+      var ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+      var name='tip-'+Date.now()+'.'+ext;
+      var fh=await imgDir.getFileHandle(name,{create:true});
+      var w=await fh.createWritable(); await w.write(f); await w.close();
+      var fig=document.createElement('figure'); fig.className='tip-figure';
+      fig.innerHTML='<img src="img/'+name+'" alt=""><figcaption contenteditable="true">캡션 (선택)</figcaption>';
+      lastEl.appendChild(fig);
+      status('사진 추가됨 → img/'+name);
+    }catch(err){ status('사진 저장 실패: '+err.message); }
+    fileInput.value='';
+  };
+
+  document.getElementById('ed-save').onclick=async function(){
+    try{
+      var out=serialize();
+      if(window.showDirectoryPicker){
+        if(!dirHandle) await connect();
+        var fh=await dirHandle.getFileHandle('index.html',{create:true});
+        var w=await fh.createWritable(); await w.write(out); await w.close();
+        status('저장 완료 ✓  터미널: git add -A && git commit && git push');
+      }else{
+        var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/html'}));
+        a.download='index.html'; a.click();
+        status('이 브라우저는 직접 저장 미지원 → 다운로드본을 폴더에 덮어쓴 뒤 git push');
+      }
+    }catch(err){ status('저장 실패: '+err.message); }
+  };
+
+  async function connect(){
+    if(dirHandle) return dirHandle;
+    if(!window.showDirectoryPicker) throw new Error('Chrome/Edge에서 localhost로 열어주세요');
+    status('폴더 선택창에서 personal/fukuoka 폴더를 고르세요');
+    dirHandle=await window.showDirectoryPicker();
+    var p=await dirHandle.requestPermission({mode:'readwrite'});
+    if(p!=='granted'){ dirHandle=null; throw new Error('폴더 쓰기 권한이 거부됨'); }
+    return dirHandle;
+  }
+
+  function serialize(){
+    var clone=document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[data-editor]').forEach(function(n){ n.remove(); });
+    clone.querySelectorAll('[contenteditable]').forEach(function(n){ n.removeAttribute('contenteditable'); });
+    clone.querySelectorAll('details.tipx[open]').forEach(function(n){ n.removeAttribute('open'); });
+    var b=clone.querySelector('body'); if(b) b.classList.remove('editing');
+    return '<!doctype html>\n'+clone.outerHTML+'\n';
+  }
+})();
+</script>
+
+
+</body></html>
